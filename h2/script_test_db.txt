@@ -1,0 +1,37 @@
+create table PROJECT (
+	key varchar(20) primary key,
+	title varchar(100) not null,
+	cursor int default 1
+)
+
+create table WORKFLOW (
+	id int auto_increment primary key,
+	title varchar(50) not null,
+	sort int default 1,
+	projectKey varchar(20) not null,
+	foreign key (projectKey) references PROJECT (key)
+)
+
+create table EMPLOYEE (
+	empNo int auto_increment primary key,
+	empId varchar(20) unique,
+	empPw char(64) not null,
+	empNm varchar(20) not null,
+	isAdmin char(1) default 'N'
+)
+
+create table ISSUE (
+	id int auto_increment primary key,
+	key int not null,
+	summary varchar(100) not null,
+	description varchar(MAX) not null,
+	reporterNo int not null,
+	assigneeNo int,
+	regDt datetime not null,
+	dueDt datetime,
+	useYn not null default 'Y'
+	projectKey varchar(20) not null,
+	workflowId int not null,
+	foreign key (projectKey) references PROJECT (key),
+	foreign key (workflowId) references WORKFLOW (id)
+)

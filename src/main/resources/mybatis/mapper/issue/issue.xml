@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="issue.issue">
+	
+	<select id="getIssue" parameterType="map" resultType="IssueVO">
+		SELECT i.id
+			, i.key
+			, i.summary
+			, i.description
+			, i.reporterNo
+			, er.empNm as reporterNm
+			, i.assigneeNo
+			, ea.empNm as assigneeNm
+			, i.regDt
+			, i.dueDt
+			, i.projectKey
+			, i.workflowId
+			, f.title as workflowNm
+		FROM ISSUE i
+			INNER JOIN WORKFLOW f
+			ON i.workflowId = f.id
+			INNER JOIN EMPLOYEE er
+			ON i.reporterNo = er.empNo
+			LEFT OUTER JOIN EMPLOYEE ea
+			ON i.assigneeNo = ea.empNo		
+		WHERE i.id = #{id}
+	</select>
+	
+	<select id="getIssues" parameterType="map" resultType="IssueVO">
+		SELECT i.id
+			, i.key
+			, i.summary
+			, i.description
+			, i.reporterNo
+			, er.empNm as reporterNm
+			, i.assigneeNo
+			, ea.empNm as assigneeNm
+			, i.regDt
+			, i.dueDt
+			, i.projectKey
+			, i.workflowId
+			, f.title as workflowNm
+		FROM ISSUE i
+			INNER JOIN WORKFLOW f
+			ON i.workflowId = f.id
+			INNER JOIN EMPLOYEE er
+			ON i.reporterNo = er.empNo
+			LEFT OUTER JOIN EMPLOYEE ea
+			ON i.assigneeNo = ea.empNo		
+		WHERE i.projectKey = #{projectKey}
+		ORDER BY id DESC
+	</select>
+	
+	<select id="getIssuesByWorkflowId" parameterType="map" resultType="IssueVO">
+		SELECT id
+			, key
+			, summary
+			, description
+			, reporterNo
+			, assigneeNo
+			, regDt
+			, dueDt
+			, projectKey
+			, workflowId
+		FROM ISSUE
+		WHERE projectKey = #{projectKey}
+			AND workflowId = #{workflowId}
+		ORDER BY id ASC
+	</select>
+	
+	<insert id="createIssue">
+		INSERT INTO ISSUE (
+			key
+			, summary
+			, description
+			, reporterNo
+			, assigneeNo
+			, regDt
+			, dueDt
+			, projectKey
+			, workflowId
+		)
+		VALUES (
+			#{key}
+			, #{summary}
+			, #{description}
+			, #{reporterNo}
+			, #{assigneeNo}
+			, NOW()
+			, #{dueDt}
+			, #{projectKey}
+			, #{workflowId}
+		)
+	</insert>
+	
+	<update id="updateIssue" parameterType="IssueVO">
+		UPDATE ISSUE
+		SET 
+		<if test="summary!=null and !summary.equals('')">summary = #{summary}</if>
+		<if test="description!=null and !description.equals('')">description = #{description}</if>
+		<if test="assigneeNo!=null and !assigneeNo.equals('')">assigneeNo = #{assigneeNo}</if>
+		<if test="dueDt!=null and !dueDt.equals('')">dueDt = #{dueDt}</if>
+		<if test="workflowId!=null and !workflowId.equals('')">workflowId = #{workflowId}</if>
+		WHERE id = #{id}
+	</update>
+		
+</mapper>

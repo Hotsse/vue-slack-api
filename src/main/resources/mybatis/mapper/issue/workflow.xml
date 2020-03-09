@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="issue.workflow">
+
+	<select id="getWorkflows" parameterType="map" resultType="WorkflowVO">
+		SELECT id
+			, title
+			, sort
+			, projectKey
+		FROM WORKFLOW
+		WHERE projectKey = #{projectKey}
+		ORDER BY sort ASC
+	</select>
+	
+	<insert id="createWorkflow" parameterType="WorkflowVO">
+		INSERT INTO WORKFLOW (
+			title
+			, sort
+			, projectKey
+		)
+		VALUES (
+			#{title}
+			, #{sort}
+			, #{projectKey}
+		)
+	</insert>
+	
+	<update id="updateWorkflow" parameterType="WorkflowVO">
+		UPDATE WORKFLOW
+		SET 
+		<if test="title!=null and !title.equals('')">title = #{title}</if>
+		<if test="sort!=null and !sort.equals('')">sort = #{sort}</if>
+		WHERE id = #{id}
+	</update>
+	
+	<delete id="deleteWorkflow" parameterType="WorkflowVO">
+		DELETE FROM WORKFLOW
+		WHERE id = #{id}
+	</delete>
+	
+</mapper>

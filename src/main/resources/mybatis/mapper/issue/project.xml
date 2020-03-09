@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="issue.project">
+
+	<select id="getProject" parameterType="map" resultType="ProjectVO">
+		SELECT key
+			, title
+			, cursor
+		FROM PROJECT
+		WHERE KEY = #{key}
+	</select>
+	
+	<select id="getAuthedProjects" parameterType="map" resultType="ProjectVO">
+		SELECT key
+			, title
+			, cursor
+		FROM PROJECT
+	</select>
+	
+	<select id="getProjectCursor" parameterType="map" resultType="Integer">
+		SELECT (cursor + 1)
+		FROM PROJECT
+		WHERE key = #{key};
+		
+		UPDATE PROJECT
+		SET cursor = cursor + 1
+		WHERE key = #{key};		
+	</select>
+			
+	<insert id="createProject" parameterType="ProjectVO">
+		INSERT INTO PROJECT (
+			key
+			, title
+		)
+		VALUES (
+			#{key}
+			, #{title}
+		)
+	</insert>
+	
+	<update id="updateProject" parameterType="ProjectVO">
+		UPDATE PROJECT
+		SET title = #{title}
+		WHERE key = #{key}
+	</update>
+	
+	
+		
+</mapper>
