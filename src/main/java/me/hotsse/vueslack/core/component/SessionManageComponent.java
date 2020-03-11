@@ -13,13 +13,12 @@ public class SessionManageComponent {
 		
 	private Map<UUID, EmployeeVO> storage = new HashMap<UUID, EmployeeVO>();
 	
-	public EmployeeVO setEmployee(EmployeeVO empInfo) {
+	public UUID setEmployee(EmployeeVO empInfo) {
 		
 		UUID uuid = UUID.randomUUID();
-		empInfo.setToken(uuid);		
 		storage.put(uuid, empInfo);
 		
-		return empInfo;
+		return uuid;
 	}
 	
 	public EmployeeVO getEmployee(UUID uuid) {

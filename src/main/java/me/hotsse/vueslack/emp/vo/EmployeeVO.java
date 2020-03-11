@@ -1,7 +1,5 @@
 package me.hotsse.vueslack.emp.vo;
 
-import java.util.UUID;
-
 import org.apache.ibatis.type.Alias;
 
 import lombok.Data;
@@ -14,7 +12,5 @@ public class EmployeeVO {
 	private String empId;
 	// private String empPw;
 	private String empNm;
-	private String isAdmin;	
-	
-	private UUID token;
+	private String isAdmin;
 }
