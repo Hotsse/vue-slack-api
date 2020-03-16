@@ -2,7 +2,6 @@ package me.hotsse.vueslack.emp.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.hotsse.vueslack.core.base.BaseController;
-import me.hotsse.vueslack.core.component.SessionManageComponent;
 import me.hotsse.vueslack.emp.service.EmployeeService;
 import me.hotsse.vueslack.emp.vo.EmployeeVO;
 
