@@ -43,3 +43,4 @@ public class IssueDao extends BaseDao {
 	}
 	
 }
+
