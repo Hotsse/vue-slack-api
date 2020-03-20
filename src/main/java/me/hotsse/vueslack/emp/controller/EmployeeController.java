@@ -2,7 +2,6 @@ package me.hotsse.vueslack.emp.controller;
 
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -14,9 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import me.hotsse.vueslack.core.base.BaseController;
-import me.hotsse.vueslack.core.component.SessionManageComponent;
 import me.hotsse.vueslack.emp.service.EmployeeService;
 import me.hotsse.vueslack.emp.vo.EmployeeVO;
+import me.hotsse.vueslack.emp.vo.OauthProfileVO;
 
 @RestController
 @RequestMapping("/employee")
@@ -25,7 +24,38 @@ public class EmployeeController extends BaseController {
 	@Autowired
 	private EmployeeService employeeService;
 	
-	private final String cookieDomain = ".hotsse.me";
+	private final String cookieDomain = ".weboffice.co.kr";
+	
+	@RequestMapping("oauth")
+	public OauthProfileVO oauth(@RequestParam Map<String, Object> param, HttpServletResponse res) {
+		
+		String accessToken = null;
+		
+		String code = param.get("code").toString();
+		log.info("code = " + code);
+		
+		OauthProfileVO profile = employeeService.oauthLogin(code);
+		log.info(profile.toString());
+		
+		if(profile != null) {
+			accessToken = this.employeeService.makeOAuthToken(profile);
+			
+			Cookie cookie = new Cookie("accessToken", accessToken);
+	        cookie.setPath("/");
+	        cookie.setDomain(cookieDomain);
+	        res.addCookie(cookie);
+		}
+		
+		return profile;		
+	}
+	
+	@RequestMapping("/isValidOAuthToken")
+	public OauthProfileVO isValidOAuthToken(@RequestHeader("Authorization") String accessToken) {
+		
+		OauthProfileVO profile = this.employeeService.isValidOAuthToken(accessToken);
+		
+		return profile;		
+	}
 	
 	@RequestMapping("/login")
 	public EmployeeVO login(@RequestParam Map<String, Object> param, HttpServletResponse res) {
@@ -56,14 +86,14 @@ public class EmployeeController extends BaseController {
 	
 	@RequestMapping("/logout")
 	public void logout() {
-		Cookie cookie = new Cookie("token", null);
+		Cookie cookie = new Cookie("accessToken", null);
         cookie.setPath("/");
         cookie.setDomain(cookieDomain);
         cookie.setMaxAge(0);
 	}
 	
 	@RequestMapping("/isValidToken")
-	public EmployeeVO getSession(@RequestHeader("Authorization") String accessToken) {
+	public EmployeeVO isValidToken(@RequestHeader("Authorization") String accessToken) {
 		
 		EmployeeVO empInfo = this.employeeService.isValidToken(accessToken);
 		
