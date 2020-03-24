@@ -12,3 +12,10 @@ spring:
     jdbc-url: jdbc:h2:file:./h2/test_db;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
     username: test
     password: 1234
+    
+logging:
+  file: "./log/myfile-%d{yyyy-MM-dd}.log"
+  pattern:
+    console: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} : %30logger{5} - %msg%n"
+  level:
+    root: info

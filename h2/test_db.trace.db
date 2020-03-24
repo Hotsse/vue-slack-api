@@ -807,3 +807,66 @@ Caused by: org.h2.jdbc.JdbcSQLInvalidAuthorizationSpecException: Wrong user name
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:461)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:429)
 	... 55 more
+2020-03-23 15:02:16 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PROJECT" not found; SQL statement:
+SELECT key
+			, title
+			, cursor
+		FROM PROJECT [42102-200]
+2020-03-23 15:02:48 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PROJECT" not found; SQL statement:
+SELECT key
+			, title
+			, cursor
+		FROM PROJECT [42102-200]
+2020-03-23 15:03:35 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "WORKFLOW" not found; SQL statement:
+SELECT id
+			, title
+			, sort
+			, projectKey
+		FROM WORKFLOW
+		WHERE projectKey = ?
+		ORDER BY sort ASC [42102-200]
+2020-03-23 15:03:36 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "ISSUE" not found; SQL statement:
+SELECT i.id
+			, i.key
+			, i.summary
+			, i.description
+			, i.reporterNo
+			, er.empNm as reporterNm
+			, i.assigneeNo
+			, ea.empNm as assigneeNm
+			, i.regDt
+			, i.dueDt
+			, i.projectKey
+			, i.workflowId
+			, f.title as workflowNm
+		FROM ISSUE i
+			INNER JOIN WORKFLOW f
+			ON i.workflowId = f.id
+			INNER JOIN EMPLOYEE er
+			ON i.reporterNo = er.empNo
+			LEFT OUTER JOIN EMPLOYEE ea
+			ON i.assigneeNo = ea.empNo		
+		WHERE i.projectKey = ?
+		ORDER BY id DESC [42102-200]
+2020-03-23 18:19:33 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PROJECT" not found; SQL statement:
+SELECT key
+			, title
+			, cursor
+		FROM PROJECT [42102-200]
+2020-03-23 18:19:41 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PROJECT" not found; SQL statement:
+SELECT key
+			, title
+			, cursor
+		FROM PROJECT [42102-200]
+2020-03-23 18:19:54 jdbc[3]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Table "PROJECT" not found; SQL statement:
+SELECT key
+			, title
+			, cursor
+		FROM PROJECT [42102-200]
