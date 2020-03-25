@@ -14,7 +14,6 @@ spring:
     password: 1234
     
 logging:
-  file: "./log/myfile-%d{yyyy-MM-dd}.log"
   pattern:
     console: "[%-5level] %d{yyyy-MM-dd HH:mm:ss} : %30logger{5} - %msg%n"
   level:
