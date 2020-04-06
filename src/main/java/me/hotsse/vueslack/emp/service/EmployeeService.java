@@ -103,7 +103,8 @@ public class EmployeeService extends BaseService {
         return empInfo;     
     }
     
-    public OauthProfileVO oauthLogin(String code) {
+    @SuppressWarnings("rawtypes")
+	public OauthProfileVO oauthLogin(String code) {
     	
     	final String CLIENT_ID = "6167bfaa-932e-4c97-a077-fd059a00dc2d";
         final String CLIENT_SECRET = "6FI5xVdsqyNSggrb86vNvDJLURRloD4mMBL4HGua";
