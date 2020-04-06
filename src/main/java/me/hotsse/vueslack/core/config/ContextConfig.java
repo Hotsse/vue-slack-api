@@ -16,6 +16,7 @@ public class ContextConfig implements WebMvcConfigurer {
 		registry.addMapping("/**")
 			.allowedOrigins("*")
 			.allowedHeaders("*")
+			.allowedMethods("*")
 			.allowCredentials(true);			
 	}
 	
